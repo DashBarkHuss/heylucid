@@ -1,5 +1,4 @@
 
-blaaaaaaaa
 <%= DateTime.now.in_time_zone('Eastern Time (US & Canada)').strftime("%A, %B %d") %>
 <%= ((@reality_checks_today[2].created_at - @reality_checks_today[1].created_at) /1.minute).round %> minutes
 <p><%= @reality_checks_today.count %> reality checks today!</p>
