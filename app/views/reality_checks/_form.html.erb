@@ -1,0 +1,17 @@
+<%= form_with(model: reality_check, local: true) do |form| %>
+  <% if reality_check.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reality_check.errors.count, "error") %> prohibited this reality_check from being saved:</h2>
+
+      <ul>
+      <% reality_check.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

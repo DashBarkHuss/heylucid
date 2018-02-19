@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reality_checks
   root 'home#index'
   get 'home/index'
 

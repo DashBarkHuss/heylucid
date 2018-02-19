@@ -1,0 +1,2 @@
+class RealityCheck < ApplicationRecord
+end

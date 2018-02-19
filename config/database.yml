@@ -6,8 +6,8 @@
 #
 default: &default
   adapter: postgresql
-  database: dashrubydatabase
-  username: dash
+  database: heyluciddb
+  username: dashiellbark-huss
   password: Rose91!!
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000

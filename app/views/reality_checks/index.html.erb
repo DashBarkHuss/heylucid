@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reality Checks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reality_checks.each do |reality_check| %>
+      <tr>
+        <td><%= reality_check.id%> <%=reality_check.created_at%></td>
+        <td><%= link_to 'Show', reality_check %></td>
+        <td><%= link_to 'Edit', edit_reality_check_path(reality_check) %></td>
+        <td><%= link_to 'Destroy', reality_check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reality Check', new_reality_check_path %>
