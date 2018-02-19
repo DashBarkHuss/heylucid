@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Reality Checks</h1>
-
+<%= Time.now %>
 <table>
   <thead>
     <tr>
@@ -12,10 +12,18 @@
   <tbody>
     <% @reality_checks.each do |reality_check| %>
       <tr>
-        <td><%= reality_check.id%> <%=reality_check.created_at%></td>
+        <td><%= reality_check.id%> <%=reality_check.created_at.in_time_zone('Eastern Time (US & Canada)')%></td>
         <td><%= link_to 'Show', reality_check %></td>
         <td><%= link_to 'Edit', edit_reality_check_path(reality_check) %></td>
         <td><%= link_to 'Destroy', reality_check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+<p>Today you reality checked <%= @reality_checks_today.count %> times!</p>
+  <tbody>
+    <% @reality_checks_today.each do |reality_check| %>
+      <tr>
+        <td><%= reality_check.id%> <%=reality_check.created_at%></td>
       </tr>
     <% end %>
   </tbody>
