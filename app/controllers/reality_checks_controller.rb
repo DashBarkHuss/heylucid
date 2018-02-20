@@ -7,8 +7,7 @@ class RealityChecksController < ApplicationController
     @number = 0
     @reality_checks = RealityCheck.all
     @time_gaps = []
-    @timezone = 'Eastern Time (US & Canada)'
-    @today = DateTime.now.in_time_zone(@time_zone)
+    @today = Time.zone.now
 
     #sets start_of_day differently if its BEFORE or AFTER 4am______ eventually have start time specified by user. This is for if the user is a night owl, their reality checks after 12 am will count as the same day
     @start_time = 4 #4am
@@ -23,6 +22,10 @@ class RealityChecksController < ApplicationController
     @yesterday = @start_of_day - 1.day
     @reality_checks_today = RealityCheck.where("created_at >= ?", @start_of_day)
     @yesterdays_reality_checks = RealityCheck.where(created_at: @yesterday..@start_of_day)  end
+
+
+
+    @reality_check_id= []
 
   # GET /reality_checks/1
   # GET /reality_checks/1.json

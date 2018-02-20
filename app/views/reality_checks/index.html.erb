@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Reality Checks</h1>
+
+@today:<%=@today.strftime("%a %I:%M%P %Z") %>
+<br>
+<br>
 time.now:<%= Time.now.strftime("%a %I:%M%P %Z") %><br>
 time.zone.now:<%= Time.zone.now.strftime("%a %I:%M%P %Z") %><br>
 time.zone<%= Time.zone %><br>
@@ -27,7 +31,11 @@ Date time now in time zone <%= @today.strftime ("%a %I:%M%P %Z") %><br>
     <% end %>
   </tbody>
 <p>Today you reality checked <%= @reality_checks_today.count %> times!</p>
+
+
+
   <tbody>
+
     <td> <hr> Today<hr></td>
     <% @reality_checks_today.each do |reality_check| %>
       <tr>
@@ -37,8 +45,20 @@ Date time now in time zone <%= @today.strftime ("%a %I:%M%P %Z") %><br>
       </tr>
     <% end %>
   </tbody>
-</table>
 
+  <tbody>
+
+    <td> <hr> yesterday<hr></td>
+    <% @yesterdays_reality_checks.each do |reality_check| %>
+      <tr>
+  <% @number += 1 %>
+        <td><%= reality_check.id%> <%=reality_check.created_at.in_time_zone(@timezone).strftime("%a %I:%M%P")%></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
 <br>
 
 <%= link_to 'New Reality Check', new_reality_check_path %>
