@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Reality Checks</h1>
-time.now:<%= Time.now.strftime("%a %I:%M%P") %><br>
-time.zone.now:<%= Time.zone.now.strftime("%a %I:%M%P") %><br>
+time.now:<%= Time.now.strftime("%a %I:%M%P %Z") %><br>
+time.zone.now:<%= Time.zone.now.strftime("%a %I:%M%P %Z") %><br>
 time.zone<%= Time.zone %><br>
-DateTime.now<%= DateTime.now.strftime("%a %I:%M%P") %><br>
+DateTime.now<%= DateTime.now.strftime("%a %I:%M%P %Z") %><br>
 @timezone<%= @timezone %><br>
-Date time now in time zone <%= @today.strftime ("%a %I:%M%P") %><br>
+Date time now in time zone <%= @today.strftime ("%a %I:%M%P %Z") %><br>
 
 
 <table>
