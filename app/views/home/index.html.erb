@@ -1,51 +1,55 @@
 
+<header class="w3-display-container w3-wide bgimg" id="home">
+  <div class="w3-display-middle w3-text-black w3-center">
+    <h4>Dash did <%= @yesterdays_reality_checks.count %> reality checks yesterday, on <%= @yesterday.strftime("%A, %B %d") %></h4>
 
-<h4>Dash did <%= @yesterdays_reality_checks.count %> reality checks yesterday, on <%= @yesterday.strftime("%A, %B %d") %></h4>
-<h1><%= @today.strftime("%A, %B %d") %></h1>
-<h2><%= @reality_checks_today.count %> reality check/s today!</h2>
+    <h1 class="w3-jumbo"><%= @today.strftime("%A, %B %d") %></h1>
 
-<button onclick="myFunction()"> Reveal All</button>
+    <h2><%= @reality_checks_today.count %> reality check/s today!</h2>
+<!--list of realuuty checks -->
+    <button onclick="myFunction()"> Reveal All</button>
 
-<div id="collapsed_reality_checks">
-  <table>
-    <thead>
-      <tr>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reality_checks_today.each do |reality_check| %>
-        <tr>
-          <% @number += 1%>
-          <td><%= @number %>. <%=reality_check.created_at.strftime("%I:%M%P")%>
-
-
-      <!-- Unless it's the last reality check, find the time in between this reality check and the next one-->
-      <br><% unless @number == @reality_checks_today.count %>
-      <!-- format and display time gap-->
-      Time gap:
-        <% i=(@reality_checks_today[@number].created_at - @reality_checks_today[@number-1].created_at)%>
-
-        <%=Time.at(i).utc.strftime("%H:%M:%S")%>
-        <%@time_gaps.push(i)%>
-        <%end%>
-      <!-- end format and display time gap-->
-      </td> </tr>
-
-      <% end %>
-      <!-- End Unless it's the last reality check,.... -->
+    <div id="collapsed_reality_checks">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reality_checks_today.each do |reality_check| %>
+            <tr>
+              <% @number += 1%>
+              <td><%= @number %>. <%=reality_check.created_at.strftime("%I:%M%P")%>
 
 
+          <!-- Unless it's the last reality check, find the time in between this reality check and the next one-->
+          <br><% unless @number == @reality_checks_today.count %>
+          <!-- format and display time gap-->
+          Time gap:
+            <% i=(@reality_checks_today[@number].created_at - @reality_checks_today[@number-1].created_at)%>
 
-    </tbody>
-  </table>
+            <%=Time.at(i).utc.strftime("%H:%M:%S")%>
+            <%@time_gaps.push(i)%>
+            <%end%>
+          <!-- end format and display time gap-->
+          </td> </tr>
 
-</div>
+          <% end %>
+          <!-- End Unless it's the last reality check,.... -->
 
 
 
+        </tbody>
+      </table>
+
+    </div>
+
+<!--end list of realuuty checks -->
 <%unless @reality_checks_today.count <= 1%>
 <% g=@time_gaps.sort.last%>
 
 <p>Longest time gap: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
 <%end%>
+  </div>
+</header>

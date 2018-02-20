@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Heylucid</title>
+    <title>heylucid</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <style>
+  body,h1,h2{font-family: "Raleway", sans-serif}
+  body, html {height: 100%}
+  p {line-height: 2}
+  .bgimg{
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+  }
+  .bgimg {background-image: url("https://www.publicdomainpictures.net/pictures/240000/velka/pink-blue-background.jpg")}
+  </style>
   <body>
     <%= yield %>
   </body>
