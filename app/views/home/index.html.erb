@@ -1,8 +1,8 @@
 
-<%=DateTime.now.in_time_zone('Eastern Time (US & Canada)').strftime("%H").to_i < 12 %>
 
-<%= DateTime.now.in_time_zone('Eastern Time (US & Canada)').strftime("%A, %B %d") %>
-<p><%= @reality_checks_today.count %> reality check/s today!</p>
+<h4>Dash did <%= @yesterdays_reality_checks.count %> reality checks yesterday, on <%= @yesterday.strftime("%A, %B %d") %></h4>
+<h1><%= @today.strftime("%A, %B %d") %></h1>
+<h2><%= @reality_checks_today.count %> reality check/s today!</h2>
 <table>
   <thead>
     <tr>
@@ -13,23 +13,15 @@
     <% @reality_checks_today.each do |reality_check| %>
       <tr>
         <% @number += 1%>
-        <td><%= @number %>. <%=reality_check.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%I:%M%P")%>
-        <!-- Unless it's the last reality check, find the time in between this reality check and the next one-->
+        <td><%= @number %>. <%=reality_check.created_at.in_time_zone(@timezone).strftime("%I:%M%P")%>
+
+    <!-- Unless it's the last reality check, find the time in between this reality check and the next one-->
     <br><% unless @number == @reality_checks_today.count %>
     <!-- format and display time gap-->
     Time gap:
       <% i=(@reality_checks_today[@number].created_at - @reality_checks_today[@number-1].created_at)%>
-<%= i %>
-      <% h = (i/1.hour).floor  %>
-      <% m = (i/1.minute).floor  %>
-      <% s = (i/1.second).round  %>
-      <%unless m >= 10%>
-      <%m = "0"+m.to_s%>
-      <%end%>
-      <%unless s >= 10%>
-      <%s = "0"+s.to_s%>
-      <%end%>
-      <%=h%>:<%=m%>:<%= s %>
+
+      <%=Time.at(i).utc.strftime("%H:%M:%S")%>
       <%@time_gaps.push(i)%>
       <%end%>
     <!-- end format and display time gap-->
@@ -41,14 +33,6 @@
 </table>
 <%unless @reality_checks_today.count <= 1%>
 <% g=@time_gaps.sort.last%>
-<% h = (g/1.hour).floor  %>
-<% m = (g/1.minute).floor  %>
-<% s = (g/1.second).round  %>
-<%unless m >= 10%>
-<%m = "0"+m.to_s%>
-<%end%>
-<%unless s >= 10%>
-<%s = "0"+s.to_s%>
-<%end%>
-<p>Longest time gap: <%=h%>:<%=m%>:<%= s %></p>
+
+<p>Longest time gap: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
 <%end%>
