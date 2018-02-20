@@ -15,7 +15,7 @@
     <% @reality_checks_today.each do |reality_check| %>
       <tr>
         <% @number += 1%>
-        <td><%= @number %>. <%=reality_check.created_at.in_time_zone(@timezone).strftime("%I:%M%P")%>
+        <td><%= @number %>. <%=reality_check.created_at.strftime("%I:%M%P")%>
 
 
     <!-- Unless it's the last reality check, find the time in between this reality check and the next one-->

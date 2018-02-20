@@ -3,8 +3,7 @@ class HomeController < ApplicationController
     @number = 0
     @reality_checks = RealityCheck.all
     @time_gaps = []
-    @timezone = 'Eastern Time (US & Canada)'
-    @today = Time.zone.now.in_time_zone(@time_zone)
+    @today = Time.zone.now
 
     #sets start_of_day differently if its BEFORE or AFTER 4am______ eventually have start time specified by user. This is for if the user is a night owl, their reality checks after 12 am will count as the same day
     @start_time = 4 #4am
