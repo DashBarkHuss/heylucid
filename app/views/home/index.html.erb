@@ -3,6 +3,8 @@
 <h4>Dash did <%= @yesterdays_reality_checks.count %> reality checks yesterday, on <%= @yesterday.strftime("%A, %B %d") %></h4>
 <h1><%= @today.strftime("%A, %B %d") %></h1>
 <h2><%= @reality_checks_today.count %> reality check/s today!</h2>
+
+
 <table>
   <thead>
     <tr>
@@ -14,6 +16,7 @@
       <tr>
         <% @number += 1%>
         <td><%= @number %>. <%=reality_check.created_at.in_time_zone(@timezone).strftime("%I:%M%P")%>
+
 
     <!-- Unless it's the last reality check, find the time in between this reality check and the next one-->
     <br><% unless @number == @reality_checks_today.count %>
@@ -29,8 +32,14 @@
 
     <% end %>
     <!-- End Unless it's the last reality check,.... -->
+
+
+
   </tbody>
 </table>
+
+
+
 <%unless @reality_checks_today.count <= 1%>
 <% g=@time_gaps.sort.last%>
 

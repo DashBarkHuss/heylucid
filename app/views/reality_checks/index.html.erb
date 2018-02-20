@@ -12,7 +12,7 @@
   <tbody>
     <% @reality_checks.each do |reality_check| %>
       <tr>
-        <td><%= reality_check.id%> <%=reality_check.created_at.in_time_zone('Eastern Time (US & Canada)')%></td>
+        <td><%= reality_check.id%> <%=reality_check.created_at.in_time_zone(@timezone).strftime("%a %I:%M%P")%></td>
         <td><%= link_to 'Show', reality_check %></td>
         <td><%= link_to 'Edit', edit_reality_check_path(reality_check) %></td>
         <td><%= link_to 'Destroy', reality_check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -21,9 +21,12 @@
   </tbody>
 <p>Today you reality checked <%= @reality_checks_today.count %> times!</p>
   <tbody>
+    <td> <hr> Today<hr></td>
     <% @reality_checks_today.each do |reality_check| %>
       <tr>
-        <td><%= reality_check.id%> <%=reality_check.created_at%></td>
+
+        <td><%= reality_check.id%> <%=reality_check.created_at.in_time_zone(@timezone).strftime("%a %I:%M%P")%></td>
+
       </tr>
     <% end %>
   </tbody>
