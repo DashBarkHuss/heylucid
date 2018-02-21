@@ -60,7 +60,7 @@
 <%unless @reality_checks_today.count <= 1%>
 <% g=@time_gaps.sort.last%>
 
-<p>Longest time gap: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
+<p>Longest time gap today: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
 <%end%>
   </div>
 </header>
