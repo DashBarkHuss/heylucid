@@ -11,12 +11,12 @@
       <%= @time_since_last_check.utc.strftime("%H") %> hour
       <%end%>
      ago</u></h3>
-    <h1 class="w3-jumbo"><%= @today.strftime("%A, %B %d") %></h1>
+    <h1 class="w3-jumbo"><%= @reality_checks_today.count %> RC's today!</h1>
 
 
 
 
-    <h2><%= @reality_checks_today.count %> reality check/s today!</h2>
+    <h2><%= @today.strftime("%A, %B %d") %></h2>
 <!--list of realuuty checks -->
     <button class=".btn" onclick="myFunction()"> Reveal All</button>
 
