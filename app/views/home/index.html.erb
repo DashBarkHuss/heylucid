@@ -4,7 +4,7 @@
     <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
       <h3>Last reality check: <u>
       <% if @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i == 0  %>
-      <%= @time_since_last_check.utc.strftime("%M") %> seconds
+      <%= @time_since_last_check.utc.strftime("%S") %> seconds
       <% elsif @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i > 0  %>
       <%= @time_since_last_check.utc.strftime("%M") %> minutes
       <% elsif @time_since_last_check.utc.strftime("%H").to_i > 0 %>
