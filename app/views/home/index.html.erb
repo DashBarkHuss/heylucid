@@ -1,13 +1,24 @@
 
 <header class="w3-display-container w3-wide bgimg" id="home">
   <div class="w3-display-middle w3-text-black w3-center">
-    <h4>Dash did <%= @yesterdays_reality_checks.count %> reality checks yesterday, on <%= @yesterday.strftime("%A, %B %d") %></h4>
-
+    <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
+      <h3>Last reality check: <u>
+      <% if @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i == 0  %>
+      <%= @time_since_last_check.utc.strftime("%M") %> seconds
+      <% elsif @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i > 0  %>
+      <%= @time_since_last_check.utc.strftime("%M") %> minutes
+      <% elsif @time_since_last_check.utc.strftime("%H").to_i > 0 %>
+      <%= @time_since_last_check.utc.strftime("%H") %> hour
+      <%end%>
+     ago</u></h3>
     <h1 class="w3-jumbo"><%= @today.strftime("%A, %B %d") %></h1>
+
+
+
 
     <h2><%= @reality_checks_today.count %> reality check/s today!</h2>
 <!--list of realuuty checks -->
-    <button onclick="myFunction()"> Reveal All</button>
+    <button class=".btn" onclick="myFunction()"> Reveal All</button>
 
     <div id="collapsed_reality_checks">
       <table>

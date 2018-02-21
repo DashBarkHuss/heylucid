@@ -6,3 +6,26 @@
 #collapsed_reality_checks {
   display: block;
 }
+
+button {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #000;
+  font-size: 20px;
+  background: #fff;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border: none;
+}
+
+button:hover {
+  background: #fc3cbf;
+  background-image: -webkit-linear-gradient(top, #fc3cbf, #3498db);
+  background-image: -moz-linear-gradient(top, #fc3cbf, #3498db);
+  background-image: -ms-linear-gradient(top, #fc3cbf, #3498db);
+  background-image: -o-linear-gradient(top, #fc3cbf, #3498db);
+  background-image: linear-gradient(to bottom, #fc3cbf, #3498db);
+  text-decoration: none;
+  color: #fff;
+}

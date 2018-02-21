@@ -19,5 +19,7 @@ class HomeController < ApplicationController
     @reality_checks_today = RealityCheck.where("created_at >= ?", @start_of_day)
     @yesterdays_reality_checks = RealityCheck.where(created_at: @yesterday..@start_of_day)
 
+    @time_since_last_check = Time.at((@today)-(@reality_checks.last.created_at))
+
   end
 end
