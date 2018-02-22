@@ -4,11 +4,11 @@
     <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
       <h3>Last reality check: <u>
       <% if @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i == 0  %>
-      <%= @time_since_last_check.utc.strftime("%S") %> seconds
+      <%= @time_since_last_check.utc.strftime("%S") %> second/s
       <% elsif @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i > 0  %>
-      <%= @time_since_last_check.utc.strftime("%M") %> minutes
+      <%= @time_since_last_check.utc.strftime("%M") %> minute/s
       <% elsif @time_since_last_check.utc.strftime("%H").to_i > 0 %>
-      <%= @time_since_last_check.utc.strftime("%H") %> hour
+      <%= @time_since_last_check.utc.strftime("%H") %> hour/s
       <%end%>
      ago</u></h3>
     <h1 class="w3-jumbo"><%= @reality_checks_today.count %> RC's today!</h1>
