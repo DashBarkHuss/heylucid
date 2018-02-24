@@ -1,8 +1,14 @@
 class HomeController < ApplicationController
   def index
-    @number = 0
+    # if user.admin?
     @reality_checks = RealityCheck.all
-    @time_gaps = []
+
+    
+    # @number = 0
+    # 
+    def time_gap()
+        @time_gaps = []
+    end
     @today = Time.zone.now
 
     #sets start_of_day differently if its BEFORE or AFTER 4am______ eventually have start time specified by user. This is for if the user is a night owl, their reality checks after 12 am will count as the same day
@@ -17,9 +23,12 @@ class HomeController < ApplicationController
 
     @yesterday = @start_of_day - 1.day
     @reality_checks_today = RealityCheck.where("created_at >= ?", @start_of_day)
-    @yesterdays_reality_checks = RealityCheck.where(created_at: @yesterday..@start_of_day)
 
     @time_since_last_check = Time.at((@today)-(@reality_checks.last.created_at))
 
+  end
+
+  def yesterdays_checks
+    @yesterdays_reality_checks = RealityCheck.where(created_at: @yesterday..@start_of_day)
   end
 end

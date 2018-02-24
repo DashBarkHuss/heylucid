@@ -21,6 +21,15 @@
   .bgimg {background-image: url("https://www.publicdomainpictures.net/pictures/240000/velka/pink-blue-background.jpg")}
   </style>
   <body>
+    <nav class='navbar'>
+        <% if current_user %>
+           <%= current_user.email %>
+           <%= link_to("Log Out", logout_path) %>
+        <% else %>
+          <%= link_to 'Log In', login_path, class:'nav-btn' %>
+          <%= link_to 'Register', new_user_path, class:'nav-btn' %>
+        <% end %>
+    </nav>
     <%= yield %>
   </body>
 </html>

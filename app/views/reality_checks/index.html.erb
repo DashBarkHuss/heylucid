@@ -21,6 +21,7 @@ Date time now in time zone <%= @today.strftime ("%a %I:%M%P %Z") %><br>
   </thead>
 
   <tbody>
+    <% if user.admin? %>
     <% @reality_checks.each do |reality_check| %>
       <tr>
         <td><%= reality_check.id%> <%=reality_check.created_at.strftime("%a %I:%M%P")%></td>
@@ -49,7 +50,7 @@ Date time now in time zone <%= @today.strftime ("%a %I:%M%P %Z") %><br>
   <tbody>
 
     <td> <hr> yesterday<hr></td>
-    <% @yesterdays_reality_checks.each do |reality_check| %>
+    <% yesterdays_checks.each do |reality_check| %>
       <tr>
   <% @number += 1 %>
         <td><%= reality_check.id%> <%=reality_check.created_at.in_time_zone(@timezone).strftime("%a %I:%M%P")%></td>
