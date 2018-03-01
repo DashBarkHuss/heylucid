@@ -1,34 +1,16 @@
 class RealityChecksController < ApplicationController
   before_action :set_reality_check, only: [:show, :edit, :update, :destroy]
 
-  # GET /reality_checks
-  # GET /reality_checks.json
   def index
-    @number = 0
-    @reality_checks = RealityCheck.all
-    @time_gaps = []
-    @today = Time.zone.now
-
-    #sets start_of_day differently if its BEFORE or AFTER 4am______ eventually have start time specified by user. This is for if the user is a night owl, their reality checks after 12 am will count as the same day
-    @start_time = 4 #4am
-    if @today.strftime("%H").to_i >= @start_time
-    @same_day = true
-    @start_of_day = @today.beginning_of_day + @start_time.hours
+    @reality_checks =
+    if user.admin
+      RealityCheck.all
     else
-    @same_day = false
-    @start_of_day = @today.beginning_of_day - 1.day + @start_time.hours
+      RealityCheck.where(user_id: current_user.id)
     end
-
-    @yesterday = @start_of_day - 1.day
-    @reality_checks_today = RealityCheck.where("created_at >= ?", @start_of_day)
-    @yesterdays_reality_checks = RealityCheck.where(created_at: @yesterday..@start_of_day)  end
+  end
 
 
-
-    @reality_check_id= []
-
-  # GET /reality_checks/1
-  # GET /reality_checks/1.json
   def show
   end
 
@@ -39,6 +21,7 @@ class RealityChecksController < ApplicationController
 
   # GET /reality_checks/1/edit
   def edit
+    redirect_back unless admin, notice: 'You Cant Change The Past!!'
   end
 
   # POST /reality_checks
@@ -74,11 +57,14 @@ class RealityChecksController < ApplicationController
   # DELETE /reality_checks/1
   # DELETE /reality_checks/1.json
   def destroy
+    if admin
     @reality_check.destroy
     respond_to do |format|
       format.html { redirect_to reality_checks_url, notice: 'Reality check was successfully destroyed.' }
       format.json { head :no_content }
     end
+    else
+      redirect_to dashboard, notice: "You Can't Undo The Past!!"
   end
 
   private
@@ -89,6 +75,6 @@ class RealityChecksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reality_check_params
-      params.fetch(:reality_check, {})
+      params.fetch(:reality_check, {:user_id})
     end
 end

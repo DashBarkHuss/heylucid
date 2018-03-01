@@ -22,7 +22,7 @@
   </style>
   <body>
     <nav class='navbar'>
-        <% if current_user %>
+        <% if logged_in? %>
            <%= current_user.email %>
            <%= link_to("Log Out", logout_path) %>
         <% else %>
@@ -30,6 +30,9 @@
           <%= link_to 'Register', new_user_path, class:'nav-btn' %>
         <% end %>
     </nav>
+    <% flash.each do |key, value| %>
+  <%= content_tag :div, value, class: "flash #{key}" %>
+<% end %>
     <%= yield %>
   </body>
 </html>
