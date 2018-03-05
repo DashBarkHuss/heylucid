@@ -1,55 +1,3 @@
-
-<header class="w3-display-container w3-wide bgimg" id="home">
-  <div class="w3-display-middle w3-text-black w3-center">
-    <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
-      <h3>Last reality check: <u>
-      <% if @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i == 0  %>
-      <%= @time_since_last_check.utc.strftime("%S") %> second/s
-      <% elsif @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i > 0  %>
-      <%= @time_since_last_check.utc.strftime("%M") %> minute/s
-      <% elsif @time_since_last_check.utc.strftime("%H").to_i > 0 %>
-      <%= @time_since_last_check.utc.strftime("%H") %> hour/s
-      <%end%>
-     ago</u></h3>
-    <h1 class="w3-jumbo"><%= @reality_checks_today.count %> RC's today!</h1>
-
-    <h2><%= @today.strftime("%A, %B %d") %></h2>
-<!--list of realuuty checks -->
-    <button class=".btn" onclick="myFunction()"> Reveal All</button>
-
-    <div id="collapsed_reality_checks">
-      <table>
-        <thead>
-          <tr>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @reality_checks_today.each do |reality_check| %>
-            <tr>
-              <% @number += 1%>
-              <td><%= @number %>. <%=reality_check.created_at.strftime("%I:%M%P")%>
-
-          </td> </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-    </div>
-
-<!--end list of realuuty checks -->
-<%unless @reality_checks_today.count <= 1%>
-<% g=@time_gaps.sort.last%>
-
-<p>Longest time gap today: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
-<%end%>
-
-
-
-
-
-
-
 <!-- gauge -->
     <script type="text/javascript" src="../assets/gauge.min.js"></script>
 
@@ -60,12 +8,15 @@
         font-size:2em;
         display: block;
         text-align: center;
+        /* border: 2px dashed blue; */
     }
 
     #gauge {
       width: 100%;
       height: 100%;
       position: absolute;
+      /* border: 1px solid red; */
+
     }
       </style>
 
@@ -102,15 +53,89 @@
     }//]]>
 
     </script>
-      <div style= "width:100px;height:100px; display: flex;
-    justify-content: center;
-    align-items: center;">
-      <canvas id="gauge" height="100" width="100" ></canvas>
-      <span id="gauge1-txt"></span>
-    </div>
+
+    <!-- <div style= "width:100%; height:100%; display: flex;
+  justify-content: center;
+  align-items: center; border: 2px dotted green;">
+    <canvas id="gauge" height="100" width="100" ></canvas>
+    <span id="gauge1-txt"></span>
+  </div> -->
 
 
 <!-- gauge -->
+
+
+
+
+
+
+<header class="w3-display-container w3-wide bgimg" id="home">
+
+  <div class="w3-display-middle w3-text-black w3-center">
+    <!-- gauge -->
+        <div style= "width:100%; height:100px; margin-top: 10px;
+        display: flex;
+      justify-content: center;
+      align-items: center;
+      <!-- border: 3px dotted purple; -->
+      ">
+        <div style= "width:100px; height:100px;
+        display: flex;
+      justify-content: center;
+      align-items: center;
+      <!-- border: 2px dotted green; -->
+
+      ">
+        <canvas id="gauge" height="100" width="100" ></canvas>
+        <span id="gauge1-txt"></span>
+      </div>
+    </div>
+    <!-- gauge end -->
+    <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
+      <h3>Last reality check: <u>
+      <% if @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i == 0  %>
+      <%= @time_since_last_check.utc.strftime("%S") %> second/s
+      <% elsif @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i > 0  %>
+      <%= @time_since_last_check.utc.strftime("%M") %> minute/s
+      <% elsif @time_since_last_check.utc.strftime("%H").to_i > 0 %>
+      <%= @time_since_last_check.utc.strftime("%H") %> hour/s
+      <%end%>
+     ago</u></h3>
+    <h1 class="w3-jumbo"><%= @reality_checks_today.count %> RC's today!</h1>
+
+    <h2><%= @today.strftime("%A, %B %d") %></h2>
+<!--list of realuuty checks -->
+    <button class=".btn" onclick="myFunction()"> Reveal All</button>
+
+    <div id="collapsed_reality_checks">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reality_checks_today.each do |reality_check| %>
+            <tr>
+              <% @number += 1%>
+              <td><%= @number %>. <%=reality_check.created_at.strftime("%I:%M%P")%>
+
+          </td> </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+
+
+<!--end list of realuuty checks -->
+<%unless @reality_checks_today.count <= 1%>
+<% g=@time_gaps.sort.last%>
+
+<p>Longest time gap today: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
+<%end%>
+
+
 
 
 

@@ -38,7 +38,7 @@ class HomeController < ApplicationController
 
 
 
-    #Ruby on Rails by Egor
+    #the code below is all just to get a score for the gauge
     @gauge_set = 0
     @iterator = 0
 
@@ -106,6 +106,11 @@ class HomeController < ApplicationController
         puts "gauge: " + @gauge_set.to_s
         @iterator += 1
     end
+
+    #end of code for score
+
+
+
 
   def gauge
     @gauge_set = 97
