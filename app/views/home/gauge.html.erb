@@ -1,0 +1,59 @@
+
+<script type="text/javascript" src="../assets/gauge.min.js"></script>
+
+<!-- css -->
+  <style type="text/css">
+    #gauge1-txt {
+    font-weight: bold;
+    font-size:2em;
+    display: block;
+    text-align: center;
+}
+
+#gauge {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+  </style>
+
+<!-- javascript -->
+<script type="text/javascript">//<![CDATA[
+window.onload=function(){
+  var opts = {
+    angle: 0.35, // The span of the gauge arc
+    lineWidth: 0.1, // The line thickness
+    radiusScale: 1, // Relative radius
+    pointer: {
+      length: 0.6, // // Relative to gauge radius
+      strokeWidth: 0.035, // The thickness
+      color: '#000000' // Fill color
+    },
+    limitMax: false,     // If false, max value increases automatically if value > maxValue
+    limitMin: false,     // If true, the min value of the gauge will be fixed
+    colorStart: '#F70FFF',   // Colors
+    colorStop: '#35B4DB',    // just experiment with them
+    strokeColor: '#EEEEEE',  // to see which ones work best for you
+    generateGradient: true,
+    highDpiSupport: true,     // High resolution support
+
+  };
+  var target = document.getElementById('gauge'); // your canvas element
+  var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+  gauge.maxValue = 100; // set max gauge value
+  gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+  gauge.animationSpeed = 32; // set animation speed (32 is default value)
+  gauge.set(<%=@gauge_set%>); // set actual value
+
+gauge.setTextField(document.getElementById("gauge1-txt"));
+//gauge.set(20); // set actual value
+}//]]>
+
+</script>
+
+  <div style= "width:300px;height:300px; display: flex;
+justify-content: center;
+align-items: center;">
+  <canvas id="gauge" height="300" width="300" ></canvas>
+  <span id="gauge1-txt"></span>
+</div>
