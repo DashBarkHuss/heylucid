@@ -48,7 +48,7 @@ class HomeController < ApplicationController
     @misses = 0
     #reality_checks_today = ["boob"]
 
-    time1 = 600 # change to 600 for 10 minutes
+    time1 = 300 # change to 600 for 10 minutes
     time2 = 1200 #20
     time3 = 2400 #40
     time4 = 3600 #60
