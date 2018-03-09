@@ -8,11 +8,11 @@ class HomeController < ApplicationController
     #sets start_of_day differently if its BEFORE or AFTER 4am______ eventually have start time specified by user. This is for if the user is a night owl, their reality checks after 12 am will count as the same day
     @start_time = 4 #4am
     if @today.strftime("%H").to_i >= @start_time
-    @same_day = true
-    @start_of_day = @today.beginning_of_day + @start_time.hours
+      @same_day = true
+      @start_of_day = @today.beginning_of_day + @start_time.hours
     else
-    @same_day = false
-    @start_of_day = @today.beginning_of_day - 1.day + @start_time.hours
+      @same_day = false
+      @start_of_day = @today.beginning_of_day - 1.day + @start_time.hours
     end
 
     @yesterday = @start_of_day - 1.day
@@ -27,93 +27,126 @@ class HomeController < ApplicationController
     #time gaps
     @iter = 0
     @reality_checks_today.each do |reality_check|
-        @iter += 1
+      @iter += 1
 
-    unless @iter == @reality_checks_today.count
-      i=(@reality_checks_today[@iter].created_at - @reality_checks_today[@iter-1].created_at)
+      unless @iter == @reality_checks_today.count
+        i=(@reality_checks_today[@iter].created_at - @reality_checks_today[@iter-1].created_at)
 
-      @time_gaps.push(i)
+        @time_gaps.push(i)
       end
     end
 
 
 
     #the code below is all just to get a score for the gauge
-    @gauge_set = 0
-    @iterator = 0
 
-    @time_passed =0
-    time1 = 600 #10
+    @time_since_start = (@today) - (@reality_checks_today.first.created_at) #today means now, change to now later
+    @iterator = 0
+    @time_segment_start = 0
+    @time_segment_end = 0
+    @time_passed_at_check = 0
+    @hits = 0
+    @misses = 0
+    #reality_checks_today = ["boob"]
+
+    time1 = 600 # change to 600 for 10 minutes
     time2 = 1200 #20
     time3 = 2400 #40
     time4 = 3600 #60
     time5 = 5400 #90
 
-
-    @time_gaps.each do |time|
+    if @reality_checks_today.empty? == false
+      loop do
         puts
-        puts @iterator.to_s + "."
-        puts "time passed: " + @time_passed.to_s
-        puts time
+        puts @iterator.to_s + "." # 1.
 
-        case
-        when time<time1 && @time_passed == 0 # less than 600 and no time passed-- ADD
-          puts "5+ to gauge"
-          @gauge_set += 5
-         @time_passed = time
-         puts "time passed: " + @time_passed.to_s
+        @time_segment_end = @time_segment_start + time1
+
+        puts "segment: " + @time_segment_start.to_s + " - " + @time_segment_end.to_s  # segment: 7000 - 8000
+
+        @index = 0 #create and reset index to 0
+
+        unless @iterator == 0
+          @time_gaps.each do |time|
+
+            @time_passed_at_check += time
+            #@index1 = @index
+            if @time_passed_at_check >= @time_segment_end
+              @misses += 1
+              puts "miss"
+              break
+            end
+
+            if @time_passed_at_check >= @time_segment_start && @time_passed_at_check < @time_segment_end
+              @hits += 1
+              puts "hit"
+              break #if a point was already added in this segment, ignore other rc's and don't change index
+            end
+
+            if @index == @time_gaps.count - 1 #if we got to the end and no index
+              unless @iterator == 0
+                @misses += 1
+                puts "miss"
+              end
+              break #or else 1 will be added to index, giving us the wrong index
+            end
 
 
-        when time<time1 && @time_passed != 0 && @time_passed < time1 && (@time_passed + time) >= time1 # less than 600 and 1-599 time passed-
-          puts "5+ to gauge"
-          @gauge_set += 5
-          @time_passed += time
-          @time_passed -= time1
-          puts "time passed: " + @time_passed.to_s
+            @index += 1
 
-         when time<time1 && @time_passed != 0 && @time_passed < time1 && (@time_passed + time) < time1 # less than 600 and 1-599 time passed-
-          @time_passed += time
-          puts "time passed: " + @time_passed.to_s
-
-
-
-
-         when (time1...time2) === time #10-20 min
-             puts "3+ to gauge"
-             @gauge_set += 3
-
-        when (time2...time3) === time #20 - 40 min
-                puts "2+ to gauge"
-             @gauge_set += 2
-
-        when (time3...time4) === time #40 - 60 min
-            puts "1+ to gauge"
-            @gauge_set += 1
-
-        when (time4...time5) === time #60 - 90 min
-            puts "-5 to gauge"
-            @gauge_set -= 5
-
-        when time >= time5 #90min
-            puts "-10 to gauge"
-            @gauge_set -= 10
-
-        else
-          puts "You gave me #{time} -- I have no idea what to do with that."
-
+          end
         end
 
-        puts "gauge: " + @gauge_set.to_s
+        @time_segment_start += time1
+
+
+        if @iterator == 0 && @reality_checks_today.empty? == false
+          @hits += 1
+          puts "hit"
+        end
+
+
+        puts "hits: " + @hits.to_s
         @iterator += 1
+        puts "time passed: " +  @time_passed_at_check.to_s
+        @time_passed_at_check = 0
+
+
+        if @time_segment_end >= @time_since_start || @index == (@time_gaps.count - 1) #@index1 == (@time_gaps.count - 1)
+          puts
+          puts "@time_segment_end >= @time_since_start: " + (@time_segment_end == @time_since_start).to_s
+          #puts "@index1 == @time_gaps.count - 1: " + (@index1 == @time_gaps.count - 1).to_s
+          puts "@index == @time_gaps.count - 1: " + (@index == @time_gaps.count - 1).to_s
+
+          puts "segment: " + @time_segment_start.to_s + " Since start: " + @time_since_start.to_s + " index: " + @index1.to_s + " total time gaps - 1: " + (@time_gaps.count-1).to_s
+
+          #puts  puts "ind: " + @index.to_s + " ind1: " + @index1.to_s
+          puts  puts "ind: " + @index.to_s
+
+          break
+        end
+      end
+
+    elsif @reality_checks_today.empty? == true
+      @hits = 0
+      puts "you didn't reality check"
     end
 
+
+    puts @hits
+    puts @misses
+
+    total_segments = (@time_since_start/time1.to_f).round
+    puts total_segments
+    score = (@hits/total_segments.to_f) * 100
+    puts score
     #end of code for score
+    @gauge_set = score
 
 
 
-
-  def gauge
-    @gauge_set = 97
+    def gauge
+      @gauge_set = 97
 
     end
 
