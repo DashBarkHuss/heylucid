@@ -39,7 +39,6 @@ class HomeController < ApplicationController
 
 
     #the code below is all just to get a score for the gauge
-
     @time_since_start = (@today) - (@reality_checks_today.first.created_at) #today means now, change to now later
     @iterator = 0
     @time_segment_start = 0
@@ -137,7 +136,9 @@ class HomeController < ApplicationController
     puts @misses
 
     total_segments = (@time_since_start/time1.to_f).round
-    puts total_segments
+    puts @hits.to_s + " hits out of " + total_segments.to_s + " segments"
+    puts "next segment starts in " + Time.at(time1 - (@time_since_start%time1)).utc.strftime("%H:%M:%S").to_s
+    @next_segment_start = Time.at(time1 - (@time_since_start%time1))
     score = (@hits/total_segments.to_f) * 100
     puts score
     #end of code for score
