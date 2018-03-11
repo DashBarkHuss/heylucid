@@ -149,12 +149,14 @@ class HomeController < ApplicationController
     score
     #end of code for score
     end #end calculate_score
+    time1 = 300 #5
+    time2 = 900 #15
+    time3 = 1800 #30
+    @next_segment_start = Time.at(time1 - (((@today) - (@reality_checks_today.first.created_at))%time1))
 
-    @next_segment_start = Time.at(300 - (((@today) - (@reality_checks_today.first.created_at))%300))
-
-    @score_1 = calculate_score 300 #5
-    @score_2 = calculate_score 900 #15
-    @score_3 = calculate_score 1800
+    @score_1 = calculate_score time1
+    @score_2 = calculate_score time2
+    @score_3 = calculate_score time3
     puts "score1 " + @score_1.to_s
     puts "score2 " + @score_2.to_s
     puts "score3 " + @score_3.to_s
