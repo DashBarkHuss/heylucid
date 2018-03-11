@@ -191,7 +191,7 @@ top: 50%;                          /*  added  */
 <%unless @reality_checks_today.count <= 1%>
 <% g=@time_gaps.sort.last%>
 
-<p>Longest time gap today: <%=@score_1%> <%=@score_2%><%=@score_3%> <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
+<p>Longest time gap today: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
 <p>Next segment starts in: <%=@next_segment_start.utc.strftime("%M")%> minutes and <%=@next_segment_start.utc.strftime("%S")%> seconds</p>
 <%end%>
 
