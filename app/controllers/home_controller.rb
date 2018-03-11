@@ -142,7 +142,6 @@ class HomeController < ApplicationController
     total_segments = (@time_since_start/time1.to_f).round
     puts @hits.to_s + " hits out of " + total_segments.to_s + " segments"
     puts "next segment starts in " + Time.at(time1 - (@time_since_start%time1)).utc.strftime("%H:%M:%S").to_s
-    @next_segment_start = Time.at(time1 - (@time_since_start%time1))
     score = (@hits/total_segments.to_f) * 100
     puts score
     puts "time till 10 pm" + Time.at((@today.beginning_of_day + 22.hours) - @today).utc.strftime("%H:%M:%S").to_s
@@ -151,6 +150,7 @@ class HomeController < ApplicationController
     #end of code for score
     end #end calculate_score
 
+    @next_segment_start = Time.at(300 - (((@today) - (@reality_checks_today.first.created_at))%300))
 
     @score_1 = calculate_score 300 #5
     @score_2 = calculate_score 900 #15
