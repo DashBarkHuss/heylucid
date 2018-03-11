@@ -3,26 +3,69 @@
 
     <!-- css -->
       <style type="text/css">
-        #gauge1-txt {
+#gauge1-txt, #gauge2-txt, #gauge3-txt {
+  position: absolute;
+  font-size: 3em;
+  /* border: 1px solid green; */
+  left: 50%;                         /*  added  */
+top: 50%;                          /*  added  */
+  transform: translate(-50%,-50%);   /*  added  */
+
+
+}
+.gauge_container{
+  display: flex;
+  height: 100px;
+  width: 100px;
+  margin-left: 5px;
+  margin-right: : 5px;
+
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+
+}
+#gauge, #gauge_2, #gauge_3{
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 50%;                         /*  added  */
+top: 50%;                          /*  added  */
+  transform: translate(-50%,-50%);   /*  added  */
+
+}
+      /* #text {
+        font-size: 3em;
+        position: absolute;
+        text-align: center;
+        justify-content: center;
+
+
+      }
+        #gauge1-txt, #gauge2-txt, #gauge3-txt, {
         font-weight: bold;
-        font-size:2em;
+        font-size:9em;
         display: block;
         text-align: center;
-        /* border: 2px dashed blue; */
+         border: 9px solid green;
+         position: absolute;
+
     }
 
-    #gauge {
+    #gauge #gauge_2 #gauge_3 {
       width: 100%;
       height: 100%;
       position: absolute;
       /* border: 1px solid red; */
 
-    }
+    } */
       </style>
 
     <!-- javascript -->
     <script type="text/javascript">//<![CDATA[
-    window.onload=function(){
+
+    function gauge(score, id, text, color){
       var opts = {
         angle: 0.35, // The span of the gauge arc
         lineWidth: 0.1, // The line thickness
@@ -35,20 +78,20 @@
         limitMax: false,     // If false, max value increases automatically if value > maxValue
         limitMin: false,     // If true, the min value of the gauge will be fixed
         colorStart: '#F70FFF',   // Colors
-        colorStop: '#35B4DB',    // just experiment with them
+        colorStop: color,    // just experiment with them
         strokeColor: '#EEEEEE',  // to see which ones work best for you
         generateGradient: true,
         highDpiSupport: true,     // High resolution support
 
       };
-      var target = document.getElementById('gauge'); // your canvas element
+      var target = document.getElementById(id); // your canvas element
       var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
       gauge.maxValue = 100; // set max gauge value
       gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
       gauge.animationSpeed = 32; // set animation speed (32 is default value)
-      gauge.set(<%=@gauge_set%>); // set actual value
+      gauge.set(score); // set actual value
 
-    gauge.setTextField(document.getElementById("gauge1-txt"));
+    gauge.setTextField(document.getElementById(text));
     //gauge.set(20); // set actual value
     }//]]>
 
@@ -71,25 +114,40 @@
 
 <header class="w3-display-container w3-wide bgimg" id="home">
 
-  <div class="w3-display-middle w3-text-black w3-center">
+  <div class="w3-display-middle w3-text-black w3-center" >
     <p>Lucid mindset score:</p>
     <!-- gauge -->
+
         <div style= "width:100%; height:100px; margin-top: 10px;
         display: flex;
       justify-content: center;
       align-items: center;
-      <!-- border: 3px dotted purple; -->
+      <!-- border: 3px solid purple; -->
       ">
-        <div style= "width:100px; height:100px;
+        <div style= "width:auto; height:100px;
         display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       <!-- border: 2px dotted green; -->
 
       ">
-        <canvas id="gauge" height="100" width="100" ></canvas>
-        <span id="gauge1-txt"></span>
+
+        <div class = "gauge_container"><canvas id="gauge" height="100" width="100"></canvas>
+        <span id="gauge1-txt"></span></div>
+        <div class = "gauge_container"><canvas id="gauge_2" height="100" width="100" ></canvas>
+        <span id="gauge2-txt"></span></div>
+        <div class = "gauge_container"><canvas id="gauge_3" height="100" width="100" " ></canvas>
+        <span id="gauge3-txt"></span></div>
+
+        <script>
+        document.getElementById("gauge").innerHTML = window.gauge(<%=@score_1%>, "gauge", "gauge1-txt", "#ff0066");
+        document.getElementById("gauge_2").innerHTML = window.gauge(<%=@score_2%>, "gauge_2", "gauge2-txt", "#cc33ff" );
+        document.getElementById("gauge_3").innerHTML = window.gauge(<%=@score_3%>, "gauge_3", "gauge3-txt", "#35B4DB");
+
+        </script>
       </div>
+
+
     </div>
     <!-- gauge end -->
     <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
@@ -133,7 +191,7 @@
 <%unless @reality_checks_today.count <= 1%>
 <% g=@time_gaps.sort.last%>
 
-<p>Longest time gap today: <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
+<p>Longest time gap today: <%=@score_1%> <%=@score_2%><%=@score_3%> <%=Time.at(g).utc.strftime("%H:%M:%S")%></p>
 <p>Next segment starts in: <%=@next_segment_start.utc.strftime("%M")%> minutes and <%=@next_segment_start.utc.strftime("%S")%> seconds</p>
 <%end%>
 

@@ -39,6 +39,14 @@ class HomeController < ApplicationController
 
 
     #the code below is all just to get a score for the gauge
+
+    #time1 = 300 # change to 600 for 10 minutes
+    time2 = 1200 #20
+    time3 = 2400 #40
+    time4 = 3600 #60
+    time5 = 5400 #90
+
+    def calculate_score(time1)
     @time_since_start = (@today) - (@reality_checks_today.first.created_at) #today means now, change to now later
     @iterator = 0
     @time_segment_start = 0
@@ -48,11 +56,7 @@ class HomeController < ApplicationController
     @misses = 0
     #reality_checks_today = ["boob"]
 
-    time1 = 300 # change to 600 for 10 minutes
-    time2 = 1200 #20
-    time3 = 2400 #40
-    time4 = 3600 #60
-    time5 = 5400 #90
+
 
     if @reality_checks_today.empty? == false
       loop do
@@ -141,8 +145,19 @@ class HomeController < ApplicationController
     @next_segment_start = Time.at(time1 - (@time_since_start%time1))
     score = (@hits/total_segments.to_f) * 100
     puts score
+    puts "time till 10 pm" + Time.at((@today.beginning_of_day + 22.hours) - @today).utc.strftime("%H:%M:%S").to_s
+
+    score
     #end of code for score
-    @gauge_set = score
+    end #end calculate_score
+
+
+    @score_1 = calculate_score 300 #5
+    @score_2 = calculate_score 900 #15
+    @score_3 = calculate_score 1800
+    puts "score1 " + @score_1.to_s
+    puts "score2 " + @score_2.to_s
+    puts "score3 " + @score_3.to_s
 
 
 
