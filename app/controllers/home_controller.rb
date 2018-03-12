@@ -24,13 +24,19 @@ class HomeController < ApplicationController
     @time_gaps = []
     #@time_gaps = [150, 150, 150, 150, 150, 150, 150, 150] # 2.5 minutes
 
+    @reality_checks_score = []
+    @reality_checks_today.each do |rc|
+    @reality_checks_score.push(rc.created_at)
+    end
+    @reality_checks_score.push(@today)
+
     #time gaps
     @iter = 0
-    @reality_checks_today.each do |reality_check|
+    @reality_checks_score.each do |reality_check|
       @iter += 1
 
-      unless @iter == @reality_checks_today.count
-        i=(@reality_checks_today[@iter].created_at - @reality_checks_today[@iter-1].created_at)
+      unless @iter == @reality_checks_score.count
+        i=(@reality_checks_score[@iter]) - (@reality_checks_score[@iter-1])
 
         @time_gaps.push(i)
       end
@@ -52,18 +58,6 @@ class HomeController < ApplicationController
 
 
       if @reality_checks_today.empty? == false
-
-        @reality_checks_score = []
-
-
-
-
-        @reality_checks_today.each do |rc|
-        @reality_checks_score.push(rc.created_at)
-        end
-        @reality_checks_score.push(@today)
-        
-        puts @reality_checks_score
 
 
 
