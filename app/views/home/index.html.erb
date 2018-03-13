@@ -37,8 +37,9 @@
   width: 110px;
   /* border: 1px solid brown; */
   font-size: .6em;
-  color: grey;
+  color: hsl( 0, 0%, 30%);
   padding-left: 5px;
+
 
 }
 
@@ -97,7 +98,36 @@
 <header class="w3-display-container w3-wide bgimg" id="home">
 
   <div class="w3-display-middle w3-text-black w3-center" >
+
+<!--timeline-->
+<script src="../assets/d3.v2.min.js" type="application/javascript"></script>
+<script src="../assets/timeknots.js" type="application/javascript"></script>
+
+<div id="timeline1" style="width:500px;"></div>
+<script type="text/javascript">
+var realityChecks = [
+ // {date:"2018-03-13T12:42:09"},
+ // {date:"2018-03-13T13:14:02"},
+ // {date:"2018-03-13T13:14:07"}
+ // {date:"2018-03-13T12:42:09"},
+ // {date:"2018-03-13T13:14:02"},
+ // {date:"2018-03-13T13:14:07"}
+];
+<% @reality_checks_today.each do |rc| %>
+realityChecks.push({date:"<%=rc.created_at.to_s[0..9]%>T<%=rc.created_at.to_s[11..18]%>"})
+<%end%>
+
+// realityChecks.push(<%=@reality_checks_score.first.to_s[0..9]%>T<%=@reality_checks_score.first.to_s[12..19]%>)
+TimeKnots.draw("#timeline1", realityChecks, {dateFormat: "%B %Y", color: "pink", width:500, showLabels: true, labelFormat: "%H:%M"});
+
+
+
+</script>
+
+
+<!--timeline end-->
     <p>Lucid mindset score:</p>
+
     <!-- gauge -->
 
         <div style= "width:100%; height:auto; margin-top: 10px;
