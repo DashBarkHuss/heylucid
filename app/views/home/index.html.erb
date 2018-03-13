@@ -103,7 +103,7 @@
 <script src="../assets/d3.v2.min.js" type="application/javascript"></script>
 <script src="../assets/timeknots.js" type="application/javascript"></script>
 
-<div id="timeline1" style="width:500px;"></div>
+<div id="timeline1" style="width:500px; margin:auto;"></div>
 <script type="text/javascript">
 var realityChecks = [
  // {date:"2018-03-13T12:42:09"},
@@ -118,7 +118,7 @@ realityChecks.push({name:"", date:"<%=rc.created_at.to_s[0..9]%>T<%=rc.created_a
 <%end%>
 
 // realityChecks.push(<%=@reality_checks_score.first.to_s[0..9]%>T<%=@reality_checks_score.first.to_s[12..19]%>)
-TimeKnots.draw("#timeline1", realityChecks, {dateFormat: "%H:%M", radius: 4, color: "purple", width:500, showLabels: true, labelFormat: "%H:%M"});
+TimeKnots.draw("#timeline1", realityChecks, {dateFormat: "%H:%M", radius: 4, color: "purple", width:500, showLabels: true, labelFormat: "%H:%M", lineWidth:3, background:"lightblue"});
 
 
 
