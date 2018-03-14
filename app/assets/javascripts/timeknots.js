@@ -214,4 +214,3 @@ var TimeKnots = {
     .on("mouseout", function(){return tip.style("opacity", 0).style("top","0px").style("left","0px");});
   }
 }
-
