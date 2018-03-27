@@ -1,3 +1,4 @@
+
 <!-- gauge -->
     <script type="text/javascript" src="../assets/gauge.min.js"></script>
 
@@ -126,7 +127,7 @@ var realityChecks = [
  // {date:"2018-03-13T13:14:07"}
 ];
 <% @reality_checks_today.each do |rc| %>
-realityChecks.push({name:"", date:"<%=rc.created_at.to_s[0..9]%>T<%=rc.created_at.to_s[11..18]%>"})
+realityChecks.push({name:"", date:"<%=rc.created_at.to_s[0..9]%>T<%=rc.created_at.to_s[11..18]%><%=%>"})
 <%end%>
 
 // realityChecks.push(<%=@reality_checks_score.first.to_s[0..9]%>T<%=@reality_checks_score.first.to_s[12..19]%>)
@@ -165,10 +166,10 @@ align-items: center;
 
         <div class = "gauge_container"><canvas id="gauge" height="100" width="100"></canvas>
         <span id="gauge1-txt"></span></div>
-        <div class = "gauge_container"><canvas id="gauge_2" height="100" width="100" ></canvas>
+        <!-- <div class = "gauge_container"><canvas id="gauge_2" height="100" width="100" ></canvas>
         <span id="gauge2-txt"></span></div>
         <div class = "gauge_container"><canvas id="gauge_3" height="100" width="100"  ></canvas>
-        <span id="gauge3-txt"></span></div>
+        <span id="gauge3-txt"></span></div> -->
 
       </div>
       <div   style= "
@@ -182,13 +183,14 @@ align-items: center;
       position: relative;
       <!-- border: 1px solid black; -->
       ">
-<div class="gauge_level_label">ultra</div><div class="gauge_level_label">moderate</div><div class="gauge_level_label">beginner</div>
+<div class="gauge_level_label">Level: 1</div>
+<!-- <div class="gauge_level_label">moderate</div><div class="gauge_level_label">beginner</div> -->
     </div>
 
         <script>
-        document.getElementById("gauge").innerHTML = window.gauge(<%=@score_1%>, "gauge", "gauge1-txt", "#ff0066");
-        document.getElementById("gauge_2").innerHTML = window.gauge(<%=@score_2%>, "gauge_2", "gauge2-txt", "#cc33ff" );
-        document.getElementById("gauge_3").innerHTML = window.gauge(<%=@score_3%>, "gauge_3", "gauge3-txt", "#35B4DB");
+        document.getElementById("gauge").innerHTML = window.gauge(<%=@level_1_score%>, "gauge", "gauge1-txt", "#ff0066");
+        // document.getElementById("gauge_2").innerHTML = window.gauge(<%=@score_2%>, "gauge_2", "gauge2-txt", "#cc33ff" );
+        // document.getElementById("gauge_3").innerHTML = window.gauge(<%=@score_3%>, "gauge_3", "gauge3-txt", "#35B4DB");
 
         </script>
       </div>

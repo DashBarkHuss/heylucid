@@ -50,9 +50,6 @@ class HomeController < ApplicationController
 
     def calculate_score(time1)
 
-
-
-
       @iterator = 0
       @misses = 0
 
@@ -102,124 +99,7 @@ class HomeController < ApplicationController
     puts "next segment starts in " + Time.at(time1 - ((@today-@reality_checks_today.last.created_at)%time1)).utc.strftime("%H:%M:%S").to_s
     score = ((@hits/total_segments.to_f) * 100).round
           puts score
-
-
-score
-
-
-
-
-
-
-    #@time_since_start = (@today) - (@reality_checks_today.first.created_at) #today means now, change to now later
-    #
-    # @iterator = 0
-    # @time_segment_start = 0
-    # @time_segment_end = 0
-    # @time_passed_at_check = 0
-    # @hits = 0
-    # @misses = 0
-    # #reality_checks_today = ["boob"]
-    #
-    #
-    #
-    # if @reality_checks_today.empty? == false
-    #   loop do
-    #     puts
-    #     puts @iterator.to_s + "." # 1.
-    #
-    #     @time_segment_end = @time_segment_start + time1
-    #
-    #     puts "segment: " + @time_segment_start.to_s + " - " + @time_segment_end.to_s  # segment: 7000 - 8000
-    #
-    #     @index = 0 #create and reset index to 0
-    #
-    #     unless @iterator == 0
-    #       @time_gaps.each do |time|
-    #
-    #         @time_passed_at_check += time
-    #         #@index1 = @index
-    #         if @time_passed_at_check >= @time_segment_end
-    #           @misses += 1
-    #           puts "miss"
-    #           break
-    #         end
-    #
-    #         if @time_passed_at_check >= @time_segment_start && @time_passed_at_check < @time_segment_end
-    #           @hits += 1
-    #           puts "hit"
-    #           break #if a point was already added in this segment, ignore other rc's and don't change index
-    #         end
-    #
-    #         if @index == @time_gaps.count - 1 #if we got to the end and no index
-    #           unless @iterator == 0
-    #             @misses += 1
-    #             puts "miss"
-    #           end
-    #           break #or else 1 will be added to index, giving us the wrong index
-    #         end
-    #
-    #
-    #         @index += 1
-    #
-    #       end
-    #     end
-    #
-    #     @time_segment_start += time1
-    #
-    #
-    #     if @iterator == 0 && @reality_checks_today.empty? == false
-    #       @hits += 1
-    #       puts "hit"
-    #     end
-    #
-    #
-    #     puts "hits: " + @hits.to_s
-    #     @iterator += 1
-    #     puts "time passed: " +  @time_passed_at_check.to_s
-    #     @time_passed_at_check = 0
-    #
-    #
-    #     if @time_segment_end >= @time_since_start || @index == (@time_gaps.count - 1) #@index1 == (@time_gaps.count - 1)
-    #       puts
-    #       puts "@time_segment_end >= @time_since_start: " + (@time_segment_end == @time_since_start).to_s
-    #       #puts "@index1 == @time_gaps.count - 1: " + (@index1 == @time_gaps.count - 1).to_s
-    #       puts "@index == @time_gaps.count - 1: " + (@index == @time_gaps.count - 1).to_s
-    #
-    #       puts "segment: " + @time_segment_start.to_s + " Since start: " + @time_since_start.to_s + " index: " + @index1.to_s + " total time gaps - 1: " + (@time_gaps.count-1).to_s
-    #
-    #       #puts  puts "ind: " + @index.to_s + " ind1: " + @index1.to_s
-    #       puts  puts "ind: " + @index.to_s
-    #
-    #       break
-    #     end
-    #   end
-    #
-    # elsif @reality_checks_today.empty? == true
-    #   @hits = 0
-    #   puts "you didn't reality check"
-    # end
-    #
-    #
-    # puts @hits
-    # puts @misses
-    #
-    # total_segments = unless (@time_since_start/time1.to_f).ceil == 0
-    #   (@time_since_start/time1.to_f).ceil
-    #
-    # else
-    #
-    #   1
-    # end
-    #
-    # puts @hits.to_s + " hits out of " + total_segments.to_s + " segments"
-    # puts "next segment starts in " + Time.at(time1 - (@time_since_start%time1)).utc.strftime("%H:%M:%S").to_s
-    # score = (@hits/total_segments.to_f) * 100
-    # puts score
-    # puts "time till 10 pm" + Time.at((@today.beginning_of_day + 22.hours) - @today).utc.strftime("%H:%M:%S").to_s
-    #
-    # score
-    #end of code for score
+          score
     end #end calculate_score
     time1 = 300 #5
     time2 = 900 #15
@@ -229,6 +109,7 @@ score
     @score_1 = calculate_score time1
     @score_2 = calculate_score time2
     @score_3 = calculate_score time3
+    @level_1_score = calculate_score 3600 #1 hour
     puts "score1 " + @score_1.to_s
     puts "score2 " + @score_2.to_s
     puts "score3 " + @score_3.to_s
