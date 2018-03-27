@@ -183,12 +183,12 @@ align-items: center;
       position: relative;
       <!-- border: 1px solid black; -->
       ">
-<div class="gauge_level_label">Level: 1</div>
+<div class="gauge_level_label"><%=@level_text%></div>
 <!-- <div class="gauge_level_label">moderate</div><div class="gauge_level_label">beginner</div> -->
     </div>
 
         <script>
-        document.getElementById("gauge").innerHTML = window.gauge(<%=@level_1_score%>, "gauge", "gauge1-txt", "#ff0066");
+        document.getElementById("gauge").innerHTML = window.gauge(<%=@level_2_score%>, "gauge", "gauge1-txt", "#cc33ff");
         // document.getElementById("gauge_2").innerHTML = window.gauge(<%=@score_2%>, "gauge_2", "gauge2-txt", "#cc33ff" );
         // document.getElementById("gauge_3").innerHTML = window.gauge(<%=@score_3%>, "gauge_3", "gauge3-txt", "#35B4DB");
 

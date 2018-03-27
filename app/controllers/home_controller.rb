@@ -48,17 +48,17 @@ class HomeController < ApplicationController
 
     #time1 = 300 # change to 600 for 10 minutes
 
-    def calculate_score(time1)
+    def calculate_score(time1, rc_day, rc_times)
 
       @iterator = 0
       @misses = 0
 
 
-      if @reality_checks_today.empty? == false
+      if rc_day.empty? == false
 
 
 
-          @reality_checks_score.each do |rc|
+          rc_times.each do |rc|
               puts
               puts @iterator.to_s + "." # 1.
               if @iterator == 0
@@ -77,7 +77,7 @@ class HomeController < ApplicationController
           puts @last_rc
           end
 
-      elsif  @reality_checks_today.empty? == true
+      elsif  rc_day.empty? == true
           puts "you didn't reality check"
           score = 0
       end
@@ -106,10 +106,21 @@ class HomeController < ApplicationController
     time3 = 1800 #30
     @next_segment_start = Time.at(time1 - (((@today) - (@reality_checks_today.first.created_at))%time1))
 
-    @score_1 = calculate_score time1
-    @score_2 = calculate_score time2
-    @score_3 = calculate_score time3
-    @level_1_score = calculate_score 3600 #1 hour
+    # @score_1 = calculate_score time1
+    # @score_2 = calculate_score time2
+    # @score_3 = calculate_score time3
+    level = 1
+    @level_text = "Level: 2"
+
+    @yesterdays_reality_checks_times = []
+    @yesterdays_reality_checks.each do |rc|
+    @yesterdays_reality_checks_times.push(rc.created_at)
+    end
+
+    # yesterday_score = calculate_score
+
+    @level_1_score = calculate_score 3600, @reality_checks_today, @reality_checks_score #1 hour
+    @level_2_score = calculate_score 2700, @reality_checks_today, @reality_checks_score #45 min
     puts "score1 " + @score_1.to_s
     puts "score2 " + @score_2.to_s
     puts "score3 " + @score_3.to_s
