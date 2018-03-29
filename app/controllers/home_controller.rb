@@ -109,8 +109,8 @@ class HomeController < ApplicationController
     # @score_1 = calculate_score time1
     # @score_2 = calculate_score time2
     # @score_3 = calculate_score time3
-    level = 1
-    @level_text = "Level: 2"
+
+    @level_text = "Level: 1"
 
     @yesterdays_reality_checks_times = []
     @yesterdays_reality_checks.each do |rc|
@@ -121,6 +121,7 @@ class HomeController < ApplicationController
 
     @level_1_score = calculate_score 3600, @reality_checks_today, @reality_checks_score #1 hour
     @level_2_score = calculate_score 2700, @reality_checks_today, @reality_checks_score #45 min
+    @level = @level_1_score
     puts "score1 " + @score_1.to_s
     puts "score2 " + @score_2.to_s
     puts "score3 " + @score_3.to_s
