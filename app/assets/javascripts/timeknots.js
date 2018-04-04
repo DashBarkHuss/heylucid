@@ -155,6 +155,8 @@ var TimeKnots = {
         }
         return Math.floor(cfg.width/2)
     }).on("mouseover", function(d){
+      console.log("mouse over");
+
       if(cfg.dateDimension){
         var format = d3.time.format(cfg.dateFormat);
         var datetime = format(new Date(d.date));
@@ -178,6 +180,8 @@ var TimeKnots = {
 
     })
     .on("mouseout", function(){
+      console.log("mouse out");
+
         d3.select(this)
         .style("fill", function(d){if(d.background != undefined){return d.background} return cfg.background}).transition()
         .duration(100).attr("r", function(d){if(d.radius != undefined){return d.radius} return cfg.radius});
@@ -209,11 +213,14 @@ var TimeKnots = {
 
 
     svg.on("mousemove", function(){
+      console.log("mouse move");
+
+
         tipPixels = parseInt(tip.style("height").replace("px", ""));
+        console.log("page y:", d3.event.pageY);
+        console.log("page y -pixels & margin:", d3.event.pageY-tipPixels-margin);
+        console.log("page x +20:", d3.event.pageX+20);
     return tip.style("top", (d3.event.pageY-tipPixels-margin)+"px").style("left",(d3.event.pageX+20)+"px");})
     .on("mouseout", function(){return tip.style("opacity", 0).style("top","0px").style("left","0px");});
   }
-
-
-
 }
