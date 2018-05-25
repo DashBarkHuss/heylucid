@@ -1,7 +1,5 @@
-<%= form_for @user do |f|  %>
-	<%= f.email_field :email %>
-	<%= f.password_field :password %>
-	<%= f.submit 'Log In' %>
-
-
+<%= form_tag(login_path) do |f|  %>
+	<%= email_field_tag :email %>
+	<%= password_field_tag :password %>
+	<%= submit_tag 'Log In' %>
 <% end %>

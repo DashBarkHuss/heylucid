@@ -3,8 +3,4 @@ class ApplicationController < ActionController::Base
   include UsersHelper
   include TimeHelper
   include RealityChecksHelper
-
- 
-
-
 end

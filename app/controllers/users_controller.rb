@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :dashboard, :update, :initial_check, :destroy]
   after_action :initial_check, only: [:create]
 
-
   def dashboard
     @reality_checks = current_user.reality_checks
   end
@@ -11,26 +10,13 @@ class UsersController < ApplicationController
     @today = Date.today
   end
 
-  # def start_day
-  #   @start_of_day = Time
-  #   Date.to_time.in_time_zone('America/New_York').beginning_of_day
-  # end
-
-  # def same_day?
-  #   if @today.strftime("%H").to_i >= @start_time
-  #     @same_day = true
-  #     @start_of_day = @today.beginning_of_day + @start_time.hours
-  #   else
-  #     @same_day = false
-  #     @start_of_day = @today.beginning_of_day - 1.day + @start_time.hours
-  #   end
-
-  #   @yesterday = @start_of_day - 1.day
-  #   @reality_checks_today = RealityCheck.where("created_at >= ?", @start_of_day)
-  # end
-
   def index
-    @users = User.all
+    if current_user.admin
+      @users = User.all
+    else
+      redirect_to root_path
+      flash[:notice] = 'Restricted Access'
+    end
   end
 
   # GET /users/1
@@ -38,12 +24,12 @@ class UsersController < ApplicationController
   def show
     if logged_in?
       if @user.id == current_user.id
-        render 'dashboard' 
+        render 'dashboard'
       end
     else
-       redirect_to login_path
-        flash[:error] = "Access Denied"
-      end
+      redirect_to login_path
+      flash[:error] = "Access Denied"
+    end
   end
 
   # GET /users/new
@@ -58,7 +44,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    @user = User.find_or_initialize_by(user_params)
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
@@ -94,16 +80,19 @@ class UsersController < ApplicationController
         format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
         format.json { head :no_content }
       end
+      session.destroy
     else
       redirect_to user_path(@user), notice: 'NOPE'
     end
   end
 
   def initial_check
+    # fix me
     RealityCheck.create(user_id: @user.id)
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     if params[:id]
@@ -113,9 +102,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:email, :password)
   end

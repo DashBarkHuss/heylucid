@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+@user = User.create(email: 'bshy@gmail', password: 'pass')
 20.times do |i|
-	User.create(email: Faker::Internet.email, password: 'pass')
-	RealityCheck.create(user_id: i, created_at: Faker::Time.backward(2))
+  RealityCheck.create(user_id: @user.id, created_at: DateTime.current - i.minutes)
 end

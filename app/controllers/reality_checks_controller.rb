@@ -1,4 +1,5 @@
 class RealityChecksController < ApplicationController
+  # this set reality check method gets called before teh actions specified in the array 
   before_action :set_reality_check, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -12,6 +13,10 @@ class RealityChecksController < ApplicationController
 
 
   def show
+    # set reality check does the first line and rails implicity does the second
+    
+    # @user = User.find_by(user_params)
+    # render 'show'
   end
 
   # GET /reality_checks/new
