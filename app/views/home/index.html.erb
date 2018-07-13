@@ -139,6 +139,8 @@ TimeKnots.draw("#timeline1", realityChecks, {dateFormat: "%H:%M", radius: 3, col
 
 
 <!--timeline end-->
+
+
     <p>Lucid mindset score:</p>
 
     <!-- gauge -->
@@ -198,6 +200,58 @@ align-items: center;
 
     </div>
     <!-- gauge end -->
+
+
+<!-- streak widget -->
+<!-- ------------------------------------------------ -->
+    <div id = "streak-widget" style=" height:80px; position: relative;" >
+
+</div> 
+<script> 
+var badColor = "lavender";
+var goodColor = "blue";
+var numberOfStreak = <%=@streak%>; //sets streak here
+
+function newCircle(position, isGood){
+  var color;
+  if (isGood == true){
+    color = goodColor
+  } else { color = badColor}
+  
+  return '<circle cx=\" '+ position +'%\" cy=\"50%\" r=\"20\" fill=\"' + color + '\" />'
+}
+
+function streak(number){
+
+    var circles = "";
+    
+    if (number> 5){
+      for (var i=0; i < 5; i++){
+       circles += newCircle((((i+1)*10)+20), true);
+    }
+      
+    } else {
+    for (var i=0; i < number; i++){
+       circles += newCircle((((i+1)*10)+20), true);
+    }
+    
+            
+    for (var i=(number); i < (5); i++){
+       circles += newCircle((((i)*10)+(30)), false);
+    }
+    }
+      
+      return circles;
+                 }
+
+
+
+document.getElementById("streak-widget").innerHTML = '<svg height=\"100%\" width=\"100%\">\r\n  <line x1=\"30%\" y1=\"50%\" x2=\"70%\" y2=\"50%\" style=\"stroke:lavender;stroke-width:2\" />\r\n' + streak(numberOfStreak) + 'Sorry, your browser does not support inline SVG.\r\n</svg>';
+</script>
+<!-- streak widget end -->
+<!-- --------------------------------------------------- -->
+
+    
     <p>Yesterday's reality checks: <%= @yesterdays_reality_checks.count %><p>
       <h3>Last reality check: <u>
       <% if @time_since_last_check.utc.strftime("%H").to_i == 0 && @time_since_last_check.utc.strftime("%M").to_i == 0  %>

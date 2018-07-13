@@ -136,5 +136,60 @@ class HomeController < ApplicationController
 
     end
 
+
+    #-------------------------streak widget-------------------------
+     puts "last reality check" + @reality_checks_today.last.created_at.to_s 
+     puts "over 30 minutes ago " + (@today - @reality_checks_today.last.created_at > 30.minutes).to_s
+
+
+     #streakOn is true if the last time user reality checked is less that 30 minutes ago.
+     @streakOn = @today - @reality_checks_today.last.created_at < 30.minutes
+      puts (@reality_checks_today.reverse.first.created_at)
+
+      @streak = 0
+
+      iterator = 0
+      
+
+     if @streakOn == true 
+
+      #go through the reality checks today starting with the last
+      @backwards_reality_checks = @reality_checks_today.reverse
+      @backwards_reality_checks.each do |reality_check|
+        @streakBegan =  "butt"
+        #if the diffeence between any two consequtive reality checks is greater than 30 minutes. get the time te streak began
+        puts "i= " + iterator.to_s
+        puts "first rc:" + @backwards_reality_checks[iterator + 1].created_at.utc.strftime("%H:%M:%S").to_s
+        puts "2nd rc: " + reality_check.created_at.utc.strftime("%H:%M:%S").to_s
+        puts (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at).to_s
+        if (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at) > 30.minutes
+          @streakBegan = reality_check.created_at
+          puts "should break"
+          break
+        else 
+          iterator += 1
+        end
+        puts "didn't break"
+
+
+      end
+
+      # note- if a reality check occured in the last 30 minutes streak should be 1, if over 30 streak is 0
+      @streak = (((@today - @streakBegan)/1800).ceil).to_s
+      
+      
+
+      
+      puts "broke"
+    puts "streak began at " + @streakBegan.utc.strftime("%H:%M:%S").to_s
+
+    puts "today " + @today.utc.strftime("%H:%M:%S").to_s
+    @reality_checks_today.reverse.each do |c|
+        puts c.created_at.utc.strftime("%H:%M:%S").to_s
+     end
+
+    end
+
+
   end
 end
