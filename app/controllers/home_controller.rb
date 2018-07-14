@@ -149,20 +149,20 @@ class HomeController < ApplicationController
       @streak = 0
 
       iterator = 0
-      
+      puts "iterator + 1 ln:152  " + (iterator+1).to_s
 
      if @streakOn == true 
 
       #go through the reality checks today starting with the last
       @backwards_reality_checks = @reality_checks_today.reverse
+
+      
       @backwards_reality_checks.each do |reality_check|
         @streakBegan =  "butt"
         #if the diffeence between any two consequtive reality checks is greater than 30 minutes. get the time te streak began
-        puts "i= " + iterator.to_s
-        puts "first rc:" + @backwards_reality_checks[iterator + 1].created_at.utc.strftime("%H:%M:%S").to_s
-        puts "2nd rc: " + reality_check.created_at.utc.strftime("%H:%M:%S").to_s
-        puts (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at).to_s
-        if (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at) > 30.minutes
+          #if it's not the last reality check in the array aka the first reality check of the day
+        if (iterator + 1) != @backwards_reality_checks.count
+        if (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at) > 30.minutes 
           @streakBegan = reality_check.created_at
           puts "should break"
           break
@@ -170,7 +170,9 @@ class HomeController < ApplicationController
           iterator += 1
         end
         puts "didn't break"
-
+      else #if the block got to the last reality check in the array aka the first reality check of the day without breaking, then the streak began at the first reality check of the day
+        @streakBegan = reality_check.created_at
+      end 
 
       end
 
