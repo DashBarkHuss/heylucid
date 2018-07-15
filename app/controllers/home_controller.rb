@@ -147,6 +147,8 @@ class HomeController < ApplicationController
       puts (@reality_checks_today.reverse.first.created_at)
 
       @streak = 0
+      @streakUnit = 900
+
 
       iterator = 0
       puts "iterator + 1 ln:152  " + (iterator+1).to_s
@@ -162,7 +164,7 @@ class HomeController < ApplicationController
         #if the diffeence between any two consequtive reality checks is greater than 30 minutes. get the time te streak began
           #if it's not the last reality check in the array aka the first reality check of the day
         if (iterator + 1) != @backwards_reality_checks.count
-        if (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at) > 30.minutes 
+        if (reality_check.created_at - @backwards_reality_checks[iterator + 1].created_at) > @streakUnit 
           @streakBegan = reality_check.created_at
           puts "should break"
           break
@@ -177,7 +179,7 @@ class HomeController < ApplicationController
       end
 
       # note- if a reality check occured in the last 30 minutes streak should be 1, if over 30 streak is 0
-      @streak = (((@today - @streakBegan)/1800).ceil).to_s
+      @streak = (((@today - @streakBegan)/@streakUnit).ceil).to_s
       
       
 
