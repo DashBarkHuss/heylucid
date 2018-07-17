@@ -22,7 +22,6 @@ class HomeController < ApplicationController
     @time_since_last_check = Time.at((@today)-(@reality_checks.last.created_at))
 
     @time_gaps = []
-    #@time_gaps = [150, 150, 150, 150, 150, 150, 150, 150] # 2.5 minutes
 
     @reality_checks_score = []
     @reality_checks_today.each do |rc|
@@ -37,7 +36,9 @@ class HomeController < ApplicationController
 
       unless @iter == @reality_checks_score.count
         i=(@reality_checks_score[@iter]) - (@reality_checks_score[@iter-1])
-
+        puts "i= " + i.to_s
+        puts "@reality_checks_score[@iter]= "+ @reality_checks_score[@iter].to_s
+        puts "@reality_checks_score[@iter-1]= "+ @reality_checks_score[@iter-1].to_s
         @time_gaps.push(i)
       end
     end
@@ -193,6 +194,8 @@ class HomeController < ApplicationController
      end
 
     end
+
+    puts @time_gaps.to_s
 
 
   end
